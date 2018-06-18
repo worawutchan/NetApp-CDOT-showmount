@@ -1,4 +1,4 @@
-"""CLI-GET-JUNCTION-PATH Ver1.0 18SEP2017 by Littlehawk."""
+"""CLI-GET-JUNCTION-PATH Ver1.1 18JUN2018 by Littlehawk."""
 
 
 import sys
@@ -22,13 +22,13 @@ client.connect(Cluster_IP, username=Cluster_user, password=Cluster_pass)
 stdin, stdout, stderr = client.exec_command("volume show -vserver " + svm_name + " -fields junction-path")
 # Split lines in to list data
 Vols_details = stdout.read().splitlines()
-# Remove 3 first line from list
-del Vols_details[0:3]
+# Remove 2 first line from list
+del Vols_details[0:2]
 # Remove 2 last line from list
 del Vols_details[len(Vols_details)-2:len(Vols_details)]
 # Display All junction-path
 for details in Vols_details:
     junc_path = details.split()
-    if (junc_path[2] != "-") and (re.match("\/vol*\w+[//]", junc_path[2])):
+    if (junc_path[2] != "-") and (re.match(r"\/vol*\w+[//]", junc_path[2])):
         print junc_path[2]
 # End of script
